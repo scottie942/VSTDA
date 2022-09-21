@@ -2,8 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
-app.use(morgan("tiny"))
-app.use(express.json())
+app.use(morgan("tiny"));
+app.use(express.json());
 
 let data = [
 	{
@@ -32,39 +32,39 @@ app.get("/", (req, res) => {
 
 app.get("/api/TodoItems", (req, res) => {
     res.send(data).status(200);
-})
+});
 
 app.get("/api/TodoItems/:number", (req, res) => {
-   let urlId = parseInt(req.params.number)
+   let urlId = parseInt(req.params.number);
    data.map(toDo => {
        if (toDo.todoItemId == urlId){
-           res.send(toDo).status(200)
+           res.send(toDo).status(200);
        } 
-   })
-})
+   });
+});
 
 app.post("/api/TodoItems", (req, res) => {
 	let index = data.findIndex(toDo =>
 		toDo.todoItemId == req.body.todoItemId
 	);
 	if (index >= 0){
-		data.splice(index, 1, req.body)
+		data.splice(index, 1, req.body);
 	} else {
-		data.push(req.body)
+		data.push(req.body);
 	}
-	res.status(201).send(req.body)
-	console.log(req.body)
+	res.status(201).send(req.body);
+	console.log(req.body);
 })
 
 app.delete("/api/TodoItems/:number", (req, res) => {
-	let urlId = parseInt(req.params.number)
+	let urlId = parseInt(req.params.number);
 	let index = data.findIndex(toDo =>
 		toDo.todoItemId == urlId
 	);
 		if (index >= 0){
-			res.status(200).send(data.splice(index, 1)[0])
+			res.status(200).send(data.splice(index, 1)[0]);
 		} else {
-			res.send("There is nothing to delete")
+			res.send("There is nothing to delete");
 		}
 })
 
